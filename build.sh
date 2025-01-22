@@ -1,7 +1,7 @@
 #!/bin/bash
-repo_version=v0.1.3
+repo_version=$(grep '^version:' ./charts/supabase/Chart.yaml | awk '{print $2}')
 git fetch --tags
-git checkout ${repo_version}
+git checkout v${repo_version}
 
 helm package ./charts/supabase -d build/
 helm repo index ./
@@ -15,3 +15,7 @@ esac
 
 #https://raw.githubusercontent.com/qdrddr/supabase-helm/refs/tags/${repo_version}/build
 "$@" -e "s+build+https://raw.githubusercontent.com/qdrddr/supabase-helm/refs/tags/${repo_version}/build+g" ./index.yaml
+
+git add *
+git commit -m "Update index.yaml with new URL for version ${repo_version}"
+git push origin HEAD:refs/tags/v${repo_version} --force
