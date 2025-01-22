@@ -14,7 +14,7 @@ case $(sed --help 2>&1) in
 esac
 
 #https://raw.githubusercontent.com/qdrddr/supabase-helm/refs/tags/${repo_version}/build
-"$@" -e "s+build+https://raw.githubusercontent.com/qdrddr/supabase-helm/refs/tags/${repo_version}/build+g" ./index.yaml
+"$@" -e "s+build+https://raw.githubusercontent.com/qdrddr/supabase-helm/refs/tags/v${repo_version}/build+g" ./index.yaml
 
 git add *
 git commit -m "Update index.yaml with new URL for version ${repo_version}"
